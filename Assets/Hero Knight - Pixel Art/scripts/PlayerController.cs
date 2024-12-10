@@ -94,10 +94,12 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {   
-        GetInputs();
+        if(pState.alive)
+        {
+            GetInputs();
+        }
         UpdateJumpVariables();
         if(pState.dashing) return;
-
         if(pState.alive)
         {
             if(!isWallJumping)
@@ -106,14 +108,11 @@ public class PlayerController : MonoBehaviour
                 Move();
                 Jump();
             }
-            
             WallSlide();
             WallJump();
-            
             StartDash();
             Attack();
             Recoil();
-            
         }
     }
 
@@ -341,6 +340,7 @@ public class PlayerController : MonoBehaviour
         anim.SetTrigger("Death");
 
         yield return new WaitForSeconds(0.9f);
+        StartCoroutine(UIManager.Instance.ActiveDeathScreen());
     }
 
     public bool Grounded()
