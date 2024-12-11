@@ -343,6 +343,16 @@ public class PlayerController : MonoBehaviour
         StartCoroutine(UIManager.Instance.ActiveDeathScreen());
     }
 
+    public void Respawned()
+    {
+        if(!pState.alive)
+        {
+            pState.alive = true;
+            Health = maxHealth;
+            anim.Play("HeroKnight_Idle");
+        }
+    }
+
     public bool Grounded()
     {
         if(Physics2D.Raycast(groundCheckpoint.position, Vector2.down, groundCheckY, whatIsGround)
