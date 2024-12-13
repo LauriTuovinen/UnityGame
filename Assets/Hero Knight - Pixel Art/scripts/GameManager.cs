@@ -18,11 +18,11 @@ public class GameManager : MonoBehaviour
             Instance = this;
         }
         DontDestroyOnLoad(gameObject);
-        save = FindAnyObjectByType<SavePoint>();
     }
 
     public void RespawnPlayer()
     {
+        save = FindAnyObjectByType<SavePoint>();
         if(save != null)
         {
             if(save.InterActed)

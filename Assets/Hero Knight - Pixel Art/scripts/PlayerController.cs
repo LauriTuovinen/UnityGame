@@ -54,6 +54,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private LayerMask wallLayer;
     [SerializeField] private float wallJumpDuration;
     [SerializeField] private Vector2 wallJumpPower; 
+    [SerializeField] private GameObject myCanvas;
     float wallJumpDirection;
     bool isWallSliding;
     bool isWallJumping;
@@ -308,6 +309,15 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.CompareTag("Hazard"))
+        {
+            Health = 0;
+            StartCoroutine(Death());
+        }
+    }
+
     IEnumerator StopDamage()
     {
         pState.invincible = true;
@@ -335,6 +345,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Death()
     {
+        myCanvas.SetActive(false);
         pState.alive = false;
         Time.timeScale = 1f;
         anim.SetTrigger("Death");
@@ -347,6 +358,7 @@ public class PlayerController : MonoBehaviour
     {
         if(!pState.alive)
         {
+            myCanvas.SetActive(true);
             pState.alive = true;
             Health = maxHealth;
             anim.Play("HeroKnight_Idle");
